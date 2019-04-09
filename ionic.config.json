@@ -1,5 +1,7 @@
 {
   "name": "mosaicapp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

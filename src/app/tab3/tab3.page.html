@@ -1,9 +1,47 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab Three
+      Cloudinary Images
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="loadStoredImagesFromCloudinary($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh images" refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <!-- <ion-virtual-scroll [items]="images">
+    <ion-card *virtualItem="let img">
+      <div>
+        <ion-img [src]="img.secure_url"></ion-img>
+      </div>
+      <ion-card-header>
+        <ion-card-title>{{ img.public_id }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content><strong>Uploaded on:</strong> {{ img.created_at }}</ion-card-content>
+    </ion-card>
+  </ion-virtual-scroll> -->
+
+  <ion-list>
+    <ion-card *ngFor="let img of images">
+      <div>
+        <ion-img [src]="img.secure_url"></ion-img>
+      </div>
+      <ion-card-header>
+        <ion-card-title>{{ img.public_id }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content><strong>Uploaded on:</strong> {{ img.created_at }}</ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ng-container *ngIf="nextCusror">
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreImagesFromCloudinary($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more images...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ng-container>
+
+</ion-content>
